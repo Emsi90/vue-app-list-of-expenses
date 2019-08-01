@@ -1,31 +1,46 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="container">
+    <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
+      <h1 class="text-center text-sm-left">List of expenses</h1>
+      <app-exchange></app-exchange>
     </div>
-    <router-view/>
+    <app-form></app-form>
+    <app-table :data="data"></app-table>
+    <!-- <app-total></app-total> -->
   </div>
 </template>
+
+<script>
+import Form from './components/Form';
+import Table from './components/Table';
+import Total from './components/Total';
+import Exchange from './components/Exchange'
+
+export default {
+  components: {
+    appForm: Form,
+    appTable: Table,
+    appTotal: Total,
+    appExchange: Exchange
+  },
+  computed: {
+    data() {
+      return this.$store.getters.data;
+    }
+  },
+  mounted() {
+    this.$store.dispatch('fetchExchange');
+  }
+}
+</script>
 
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-}
-#nav {
   padding: 30px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
